@@ -10,6 +10,8 @@ import nltk
 nltk.download('stopwords')
 from nltk.corpus import stopwords
 from sklearn.feature_extraction.text import TfidfVectorizer, CountVectorizer
+import gensim.downloader as api
+from gensim.models.doc2vec import Doc2Vec
 
 import subprocess
 import sys
@@ -47,7 +49,6 @@ class Doc2Vec_model(embedding_model):
         self.path = path
         
     def load_model(self):
-        from gensim.models.doc2vec import Doc2Vec
         self.model = Doc2Vec.load(self.path)
         
     def calculate_embeddings(self, tokenized_list):
@@ -89,21 +90,21 @@ class SIF(embedding_model):
         self.path = path
         
     def load_model(self, language='en'):
-        import gensim.downloader as api
         from fse.models import uSIF
-        from fse import IndexedList
         word_embedding = api.load(self.path)
         self.model = uSIF(word_embedding, lang_freq=language)
         
     def fit(self, list):
-        texts = fse.IndexedList(list)
+        from fse import IndexedList
+        texts = IndexedList(list)
         self.model.train(texts)
         
     def calculate_embeddings(self, list):
-        texts = fse.IndexedList(list)
+        from fse import IndexedList
+        texts = IndexedList(list)
         embs = self.model.infer(texts)
         return embs
-
+    
 class Count(embedding_model):
     def __init__(self, **kwargs):
         self.params = {'encoding': 'unicode',

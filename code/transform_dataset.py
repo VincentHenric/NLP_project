@@ -4,15 +4,89 @@
 
 Ceci est un script temporaire.
 """
-import pandas as pd
 
+import pandas as pd
+from collections import Counter
+import string
+
+from bs4 import BeautifulSoup
+from nltk import word_tokenize
+from nltk.corpus import stopwords, brown
+from nltk.stem import WordNetLemmatizer, SnowballStemmer
+import re
 import nltk
 
 import torch
 from torchtext.data import Example, Dataset, Field, LabelField, TabularDataset, Iterator, BucketIterator
 
 nltk.download('punkt')
+nltk.download('wordnet')
 DEVICE = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+
+def preprocessing_factory(functions, language='english'):
+    lemmatizer = WordNetLemmatizer()
+    stemmer = SnowballStemmer(language)
+    stop = stopwords.words(language)
+    
+    def remove_punc(text):
+        return re.sub(r"[^A-Za-z0-9]", " ", str(text))
+    
+    def remove_punc_2(text):
+        text = text.replace("(", " ").replace(")", " ")
+        text = re.sub(' +', ' ', text)
+        text = re.sub("(\w+)\.([A-Z]+)", "\g<1> \g<2>", text)
+        return text
+    
+    def remove_xml(text):
+        return BeautifulSoup(text, "lxml").get_text()
+    
+    def lower_text(text):
+        return text.lower()
+    
+    def simple_tokenize(text):
+        return text.split()
+    
+    def advanced_tokenize(text):
+        return word_tokenize(text)
+    
+    def remove_stopwords(text):
+        return [w for w in text if not w in stop]
+    
+    def lemmatizing(text):
+        return [lemmatizer.lemmatize(word) for word in text]
+    
+    def stemming(text):
+        return [stemmer.stem(word) for word in text]
+    
+    def nothing(text):
+        return text
+    
+    convert = {'punct':remove_punc, 'custPunct':remove_punc_2,
+               'xml':remove_xml, 'lower':lower_text,
+               'simpleToken':simple_tokenize, 'advToken':advanced_tokenize,
+               'stopwords':remove_stopwords,
+               'lemming':lemmatizing, 'stemming':stemming,
+               'nothing':nothing}
+    
+    return [convert[func] for func in functions]
+
+def apply_all(text, functions):
+    for func in functions:
+      text = func(text)
+    return text
+
+def preprocess(reviews, functions):
+    tokens = list(map(lambda x: apply_all(x, preprocessing_factory(filter(lambda x: x!='nothing', functions))), reviews))
+    return tokens
+
+def common_percentage(tokens, vocab):
+  return sum([w in vocab for sentence in tokens for w in sentence])/sum(map(len, tokens))
+
+def check_difference(tokens, vocab):
+  return list(set([w for sentence in tokens for w in sentence if w not in vocab]))
+
+
+
 
 def clean_quora(path='../data/train.csv', output='list', tokenizer = nltk.word_tokenize, device=DEVICE, batch_size=32):
     data = pd.read_csv(path)
