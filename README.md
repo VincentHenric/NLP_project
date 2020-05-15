@@ -9,8 +9,7 @@ The code folder contains all the different experiments we realized for this proj
 
 ### Experiments
 - `Benchmark_embeddings.ipynb` : Exhaustive study on the sentence embeddings
-- `FuzzyWuzzy.ipynb` :
-- `Fuzzy_Quora.ipynb` :
+- `FuzzyWuzzy.ipynb` : Logistic regression and Gradient boosting on basic features & Fuzzy ratios.
 - `MaLSTM_Siamese.ipynb` : Siamese network with LSTM and Manhattan distance (Tensorflow version)
 - `MaLSTM_model.ipynb` : Siamese network with LSTM and Manhattan distance (Pytorch version and better results !)
 - `SIamese_Net_Attention.ipynb` :
