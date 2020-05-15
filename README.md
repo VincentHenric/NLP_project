@@ -12,8 +12,8 @@ The code folder contains all the different experiments we realized for this proj
 - `FuzzyWuzzy.ipynb` : Logistic regression and Gradient boosting on basic features & Fuzzy ratios.
 - `MaLSTM_Siamese.ipynb` : Siamese network with LSTM and Manhattan distance (Tensorflow version)
 - `MaLSTM_model.ipynb` : Siamese network with LSTM and Manhattan distance (Pytorch version and better results !)
-- `SIamese_Net_Attention.ipynb` :
-- `Sentence_Transformers_embbedings_bert.ipynb` :
+- `SIamese_Net_Attention.ipynb` : Siamese network with attention layer (Tensorflow)
+- `Sentence_Transformers_embbedings_bert.ipynb` : Retreiving bert embeddings and experiments on consine similarity
 - `Vincent.ipynb` :
 - `Vincent_Benchmark_embeddings.ipynb` :
 - `Vincent_SBERT.ipynb` :
