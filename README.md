@@ -8,7 +8,7 @@ The report of the project is the pdf file in the repo.
 The code folder contains all the different experiments we realized for this project.
 
 ### Experiments
-- `Benchmark_embeddings.ipynb` :
+- `Benchmark_embeddings.ipynb` : Exhaustive study on the sentence embeddings
 - `FuzzyWuzzy.ipynb` :
 - `Fuzzy_Quora.ipynb` :
 - `MaLSTM_Siamese.ipynb` : Siamese network with LSTM and Manhattan distance (Tensorflow version)
@@ -19,9 +19,9 @@ The code folder contains all the different experiments we realized for this proj
 - `Vincent_Benchmark_embeddings.ipynb` :
 - `Vincent_SBERT.ipynb` :
 - `Vincent_tfidf.ipynb` :
-- `combine_features.ipynb` :	
-- `compute_embeddings.py` :
-- `modeling.py` :
+- `combine_features.ipynb` :	Combination of features from benchmark embedddings, and other features in a big model
+- `compute_embeddings.py` : helper functions to compute sentence embeddings
+- `modeling.py` : helper functions to launch some machine learning models
   
 ### Data management  
 
