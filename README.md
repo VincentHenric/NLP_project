@@ -29,3 +29,9 @@ The three python files below are tools for cleaning and preparing the data (not 
 - `cleaning.py` 
 - `transform_dataset.py`
 - `utils_cleaning.py`
+
+### How to use
+
+We run all the programs on Google Colab. GPU is highly recommended.
+Many deep learning have been used, depending on how everyone in the project feel confortable with.
+Some pretrained embeddings need to be downloaded. It should be clear in the notebooks.
